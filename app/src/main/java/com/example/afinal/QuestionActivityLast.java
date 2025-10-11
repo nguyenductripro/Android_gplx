@@ -3,10 +3,10 @@ package com.example.afinal;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -46,6 +46,7 @@ public class QuestionActivityLast extends AppCompatActivity {
     private int start,end;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_question_last);
@@ -55,14 +56,16 @@ public class QuestionActivityLast extends AppCompatActivity {
             return insets;
         });
         Intent intent=getIntent();
+
         String topic=intent.getStringExtra("name");
         topicname=findViewById(R.id.txtTopicQAL);
         topicname.setText(topic);
         backSetup();
-        database=openOrCreateDatabase("ATGT3.db",MODE_PRIVATE,null);
+        database=openOrCreateDatabase("ATGT.db",MODE_PRIVATE,null);
         start=intent.getIntExtra("start",1);
         end=intent.getIntExtra("end",1);
         count= end-start+1;
+
         Cursor cursor = database.query("Questions",null,"question_id BETWEEN ? AND ?",new String[]{String.valueOf(start),String.valueOf(end)},null,null,null);
 
         setting(cursor);
@@ -77,6 +80,7 @@ public class QuestionActivityLast extends AppCompatActivity {
     }
 
     private void setting(Cursor cursor) {
+
         content=findViewById(R.id.txtQALcontent);
         a=findViewById(R.id.radiobtnQALa);
         b=findViewById(R.id.radiobtnQALb);
@@ -88,6 +92,7 @@ public class QuestionActivityLast extends AppCompatActivity {
         imgQuestion=findViewById(R.id.imgQAL);
         hashMap=new HashMap<>();
         answer=new HashMap<>();
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(@NonNull RadioGroup group, int checkedId) {
@@ -100,11 +105,15 @@ public class QuestionActivityLast extends AppCompatActivity {
                 }
             }
         });
+
         if(cursor.moveToFirst()){
             set_content(cursor);
             answer.put(1,ans);
         }
-        else finish();
+        else {
+            Log.d("DEBUG_TAG", String.valueOf(start));
+            finish();
+        }
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

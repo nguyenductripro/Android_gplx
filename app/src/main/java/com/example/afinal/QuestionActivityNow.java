@@ -3,7 +3,6 @@ package com.example.afinal;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -58,7 +57,7 @@ public class QuestionActivityNow extends AppCompatActivity {
         String topic=intent.getStringExtra("name");
         topicname=findViewById(R.id.txtTopicQAN);
         topicname.setText(topic);
-        database=openOrCreateDatabase("ATGT3.db",MODE_PRIVATE,null);
+        database=openOrCreateDatabase("ATGT.db",MODE_PRIVATE,null);
         backSetup();
         id=intent.getStringExtra("id");
         Cursor cursor=null;
