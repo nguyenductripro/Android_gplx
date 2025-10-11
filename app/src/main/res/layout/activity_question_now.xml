@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_gradient"
+    tools:context=".QuestionActivityLast">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
+
+        <ImageButton
+            android:id="@+id/btnBackQAN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_null"
+            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
+        <TextView
+            android:id="@+id/txtTopicQAN"
+            android:layout_width="128dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="tên chủ đề"
+            android:textColor="@color/white"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnQAN_submit"
+            android:layout_width="30dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:text="Nộp bài"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_search"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtQANcontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="10dp"
+                    android:text="Phần của đường bộ được sử dụng cho phương tiện giao thông đường  bộ đi lại là gì? "
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/imgQAN"
+                    android:layout_width="match_parent"
+                    android:layout_height="197dp"
+                    android:padding="10dp"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+                <RadioGroup
+                    android:id="@+id/radioBtnQAN"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <RadioButton
+                        android:id="@+id/radiobtnQANa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1. Phần mặt đường và lề đường. " />
+
+                    <RadioButton
+                        android:id="@+id/radiobtnQANb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2. Phần đường xe chạy. " />
+
+                    <RadioButton
+                        android:id="@+id/radiobtnQANc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="3. Khổ giới hạn của đường bộ là khoảng trống có kích thước giới hạn về chiều  rộng, chiều cao của đường bộ để các xe, bao gồm cả hàng hoá xếp trên xe đi qua  được an toàn và được xác định theo quy chuẩn, tiêu chuẩn kỹ thuật của đường bộ.  " />
+
+                    <RadioButton
+                        android:id="@+id/radiobtnQANd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/txtQANans"
+                    android:layout_width="match_parent"
+                    android:paddingHorizontal="20dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/txtQANexplain"
+                    android:layout_width="match_parent"
+                    android:paddingHorizontal="20dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:padding="10dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnnextQAN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Kiểm tra" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
