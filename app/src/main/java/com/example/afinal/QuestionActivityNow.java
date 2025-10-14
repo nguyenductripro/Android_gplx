@@ -26,6 +26,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class QuestionActivityNow extends AppCompatActivity {
@@ -39,13 +40,13 @@ public class QuestionActivityNow extends AppCompatActivity {
     private ImageView imgQuestion;
     private String ans="",explaination="",img_url="",id;
     private RadioGroup radioGroup;
-    private int anInt=1;
     private HashMap<Integer,String> hashMap;
     private HashMap<Integer,String> answer;
     private int count;
-    private int start,end,level,min,time,total;
+    private int start,end,level,min,time,total,ques_id;
     private  Intent intent;
     private Cursor cursor=null;
+    private ArrayList<Integer> listofquestion=new ArrayList<>();
     private HashMap<Integer,Integer>rule;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,14 +179,14 @@ public class QuestionActivityNow extends AppCompatActivity {
                     RadioButton selected = findViewById(checkedId);
                     if (selected != null) {
                         String chosen = selected.getText().toString();
-                        hashMap.put(anInt, chosen);
+                        hashMap.put(ques_id, chosen);
                     }
                 }
             }
         });
         if(cursor.moveToFirst()){
             set_content(cursor);
-            answer.put(1,ans);
+            answer.put(ques_id,ans);
         }
         else finish();
 
@@ -208,10 +209,9 @@ public class QuestionActivityNow extends AppCompatActivity {
                     showans.setText("");
                     explain.setText("");
                     next.setText("Kiểm tra");
-                    anInt++;
                     cursor.moveToNext();
                     set_content(cursor);
-                    answer.put(anInt,ans);
+                    answer.put(ques_id,ans);
 
                 }
             }
@@ -220,7 +220,8 @@ public class QuestionActivityNow extends AppCompatActivity {
     }
 
     private void set_content(Cursor cursor) {
-        content.setText("Câu "+cursor.getString(0)+": "+cursor.getString(2));
+        ques_id=cursor.getInt(0);
+        content.setText("Câu "+ques_id+": "+cursor.getString(2));
         a.setText(cursor.getString(6));
         b.setText(cursor.getString(7));
         c.setVisibility(View.VISIBLE);
@@ -260,6 +261,13 @@ public class QuestionActivityNow extends AppCompatActivity {
     }
 
 
+    private  void getfullques(){
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            listofquestion.add(cursor.getInt(0));
+            cursor.moveToNext();
+        }
+    }
     private void submitSetup() {
         submit=findViewById(R.id.btnQAN_submit);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -278,16 +286,27 @@ public class QuestionActivityNow extends AppCompatActivity {
                         builder1.setTitle("Kết quả");
                         String msg="/"+count;
                         int truecnt=0;
-                        for(int i=1;i<=count;i++){
-                            if(hashMap.getOrDefault(i," ").equals(answer.getOrDefault(i,"  " ))){
-                                truecnt++;
-                            }
+                        for(Integer q:hashMap.keySet()){
+                            if(hashMap.get(q).equals(answer.get(q))) truecnt++;
                         }
+
                         msg=String.valueOf(truecnt)+msg;
                         builder1.setMessage(msg);
-                        builder1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        builder1.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+                        builder1.setPositiveButton("Xem lại bài làm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent nextIntent=new Intent(QuestionActivityNow.this,QuestionActivityReview.class);
+                                getfullques();
+                                nextIntent.putExtra("choice",hashMap);
+                                nextIntent.putExtra("list",listofquestion);
+                                startActivity(nextIntent);
+
                                 finish();
                             }
                         });
@@ -301,6 +320,7 @@ public class QuestionActivityNow extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
+
                 AlertDialog alertDialog=builder.create();
                 alertDialog.show();
             }
@@ -333,6 +353,7 @@ public class QuestionActivityNow extends AppCompatActivity {
         });
 
     }
+
 
 
 }
