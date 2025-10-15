@@ -2,6 +2,7 @@ package com.example.afinal.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +62,13 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         a.setText("A. "+question.getA());
         b.setText("B. "+question.getB());
         content.setText("Câu "+question.getId()+": "+question.getContent());
+        if(question.getIs_critical()==1){
+            content.setText("Câu "+question.getId()+"(câu điểm liệt)"+": "+question.getContent());
+            content.setTypeface(null, Typeface.BOLD_ITALIC);
+        }
+        else{
+            content.setTypeface(null, Typeface.BOLD);
+        }
         explain.setText("\n Giải thích: "+question.getExplain());
         String img_url="";
         if(question.getImg_url()!=null){
