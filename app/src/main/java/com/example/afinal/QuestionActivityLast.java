@@ -268,7 +268,11 @@ public class QuestionActivityLast extends AppCompatActivity {
             else if (selected.equals(c.getText().toString())) c.setChecked(true);
             else if (selected.equals(d.getText().toString())) d.setChecked(true);
         }
-        else radioGroup.clearCheck();
+        else {
+             radioGroup.clearCheck();
+             hashMap.remove(ques_id);
+
+        }
     }
 
     private  void getfullques(){
@@ -303,6 +307,7 @@ public class QuestionActivityLast extends AppCompatActivity {
                                     state="Đỗ";
                                 }
                             }
+
                         }
 
                         msg=String.valueOf(truecnt)+msg;

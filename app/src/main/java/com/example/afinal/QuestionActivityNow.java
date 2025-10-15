@@ -259,6 +259,7 @@ public class QuestionActivityNow extends AppCompatActivity {
             }
         }
         radioGroup.clearCheck();
+        hashMap.remove(ques_id);
     }
 
 
