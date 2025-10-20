@@ -193,7 +193,7 @@ public class QuestionActivityNow extends AppCompatActivity {
         if(cursor.moveToFirst()){
 
             int cnt=1;
-            if(id.equals("topic")){
+            if(id.equals("topic")&&topicid==7){
                 while(true){
                     if(cnt==start) break;
                     cnt++;
@@ -281,11 +281,13 @@ public class QuestionActivityNow extends AppCompatActivity {
 
     private  void getfullques(){
         cursor.moveToFirst();
-        int cnt=1;
-        while(true){
-            if(cnt==start) break;
-            cnt++;
-            cursor.moveToNext();
+        if(id.equals("topic")&&topicid==7){
+            int cnt=1;
+            while(true){
+                if(cnt==start) break;
+                cnt++;
+                cursor.moveToNext();
+            }
         }
         while(!cursor.isAfterLast()){
             listofquestion.add(cursor.getInt(0));
