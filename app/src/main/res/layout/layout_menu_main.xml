@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_menu"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/itemOption1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Xem câu hỏi đã lưu"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/itemOption2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Xem lịch sử"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/itemLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Thống kê"
+        android:textSize="16sp" />
+</LinearLayout>

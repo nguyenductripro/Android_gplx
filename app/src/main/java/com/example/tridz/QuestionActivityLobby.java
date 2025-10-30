@@ -1,4 +1,4 @@
-package com.example.afinal;
+package com.example.tridz;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

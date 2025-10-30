@@ -1,4 +1,4 @@
-package com.example.afinal;
+package com.example.tridz;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,8 +14,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.afinal.adapter.QuestionAdapter;
-import com.example.afinal.dbclass.Question;
+import com.example.tridz.adapter.QuestionAdapter;
+import com.example.tridz.dbclass.Question;
 
 import java.util.ArrayList;
 import java.util.HashMap;

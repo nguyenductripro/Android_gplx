@@ -1,7 +1,6 @@
-package com.example.afinal.adapter;
+package com.example.tridz.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -15,9 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.afinal.QuestionActivityLast;
-import com.example.afinal.R;
-import com.example.afinal.dbclass.Question;
+import com.example.tridz.R;
+import com.example.tridz.dbclass.Question;
 
 import java.io.IOException;
 import java.io.InputStream;

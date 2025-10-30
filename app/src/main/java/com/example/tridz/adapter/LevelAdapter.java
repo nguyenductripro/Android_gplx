@@ -1,4 +1,4 @@
-package com.example.afinal.adapter;
+package com.example.tridz.adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.afinal.R;
-import com.example.afinal.dbclass.Level;
+import com.example.tridz.R;
+import com.example.tridz.dbclass.Level;
 
 import java.util.ArrayList;
 

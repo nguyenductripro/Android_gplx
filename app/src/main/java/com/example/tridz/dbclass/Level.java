@@ -1,4 +1,4 @@
-package com.example.afinal.dbclass;
+package com.example.tridz.dbclass;
 import java.lang.String;
 public class Level {
     private int level_id;

@@ -1,9 +1,4 @@
-package com.example.afinal.dbclass;
-
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
+package com.example.tridz.dbclass;
 
 public class Question {
     private int id,topic_id,is_critical;

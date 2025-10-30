@@ -1,4 +1,4 @@
-package com.example.afinal.dbclass;
+package com.example.tridz.dbclass;
 
 public class Categories {
     private int id;

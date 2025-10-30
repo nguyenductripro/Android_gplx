@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.afinal"
+    namespace = "com.example.tridz"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.afinal"
+        applicationId = "com.example.tridz"
         minSdk = 28
         targetSdk = 36
         versionCode = 1

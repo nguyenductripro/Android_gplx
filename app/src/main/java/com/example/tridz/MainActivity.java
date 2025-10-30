@@ -1,14 +1,21 @@
-package com.example.afinal;
+package com.example.tridz;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,10 +23,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.afinal.adapter.LevelAdapter;
-import com.example.afinal.dbclass.Categories;
-import com.example.afinal.adapter.CategoriesAdapter;
-import com.example.afinal.dbclass.Level;
+import com.example.tridz.adapter.LevelAdapter;
+import com.example.tridz.dbclass.Categories;
+import com.example.tridz.adapter.CategoriesAdapter;
+import com.example.tridz.dbclass.Level;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Categories> list;
     private ArrayList<Level> arrayList;
     private SQLiteDatabase database=null;
+    private ImageButton btnMenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +61,61 @@ public class MainActivity extends AppCompatActivity {
         tabmainsetup();
         tab_topic_setup();
         tab_level_setup();
+        btnMenu=findViewById(R.id.btnMainMenu);
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopup(v);
+            }
+        }) ;
 
     }
 
+    private void showPopup(View v) {
+        View popup= LayoutInflater.from(MainActivity.this).inflate(R.layout.layout_menu_main,null);
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int screenWidth = metrics.widthPixels;
+        PopupWindow popupWindow=new PopupWindow(popup,(int) (screenWidth*0.7),ViewGroup.LayoutParams.MATCH_PARENT,true);
+        popupWindow.setElevation(10f);
+        popupWindow.showAtLocation(getWindow().getDecorView(), Gravity.TOP|Gravity.START,0,0);
+
+    }
+
+    private void showMiniDrawer(View anchor) {
+    // Nạp layout menu nhỏ
+    View popupView = LayoutInflater.from(this).inflate(R.layout.layout_menu_main, null);
+
+    // Tạo PopupWindow
+    PopupWindow popupWindow = new PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            true // cho phép bấm ra ngoài để đóng
+    );
+    popupWindow.setElevation(10f);
+
+    // Hiển thị popup ở góc trái trên
+    popupWindow.showAtLocation(anchor, Gravity.TOP | Gravity.START, 0, 100);
+
+    // Lấy các item để xử lý click
+    TextView item1 = popupView.findViewById(R.id.itemOption1);
+    TextView item2 = popupView.findViewById(R.id.itemOption2);
+    TextView itemLogout = popupView.findViewById(R.id.itemLogout);
+
+    item1.setOnClickListener(v -> {
+        popupWindow.dismiss();
+        // Xử lý sự kiện ở đây
+    });
+
+    item2.setOnClickListener(v -> {
+        popupWindow.dismiss();
+    });
+
+    itemLogout.setOnClickListener(v -> {
+        popupWindow.dismiss();
+    });
+};
     private void tab_level_setup() {
         arrayList=new ArrayList<>();
         Cursor cursor = database.query("level",null,null,null,null,null,null);
