@@ -55,13 +55,11 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        processCopy();
-        database = openOrCreateDatabase("ATGT.db",MODE_PRIVATE,null);
-
+        init();
         tabmainsetup();
         tab_topic_setup();
         tab_level_setup();
-        btnMenu=findViewById(R.id.btnMainMenu);
+
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +68,22 @@ public class MainActivity extends AppCompatActivity {
         }) ;
 
     }
+
+    private void init() {
+        processCopy();
+        database = openOrCreateDatabase("ATGT.db",MODE_PRIVATE,null);
+        find_view();
+        list=new ArrayList<>();
+        arrayList=new ArrayList<>();
+    }
+
+    private void find_view() {
+        tabmain=findViewById(R.id.tab_main);
+        lvLevel=findViewById(R.id.lvLevel);
+        lvTopic = findViewById(R.id.lv_topic);
+        btnMenu=findViewById(R.id.btnMainMenu);
+    }
+
 
     private void showPopup(View v) {
         View popup= LayoutInflater.from(MainActivity.this).inflate(R.layout.layout_menu_main,null);
@@ -82,42 +96,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void showMiniDrawer(View anchor) {
-    // Nạp layout menu nhỏ
-    View popupView = LayoutInflater.from(this).inflate(R.layout.layout_menu_main, null);
 
-    // Tạo PopupWindow
-    PopupWindow popupWindow = new PopupWindow(
-            popupView,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            true // cho phép bấm ra ngoài để đóng
-    );
-    popupWindow.setElevation(10f);
-
-    // Hiển thị popup ở góc trái trên
-    popupWindow.showAtLocation(anchor, Gravity.TOP | Gravity.START, 0, 100);
-
-    // Lấy các item để xử lý click
-    TextView item1 = popupView.findViewById(R.id.itemOption1);
-    TextView item2 = popupView.findViewById(R.id.itemOption2);
-    TextView itemLogout = popupView.findViewById(R.id.itemLogout);
-
-    item1.setOnClickListener(v -> {
-        popupWindow.dismiss();
-        // Xử lý sự kiện ở đây
-    });
-
-    item2.setOnClickListener(v -> {
-        popupWindow.dismiss();
-    });
-
-    itemLogout.setOnClickListener(v -> {
-        popupWindow.dismiss();
-    });
-};
     private void tab_level_setup() {
-        arrayList=new ArrayList<>();
+
         Cursor cursor = database.query("level",null,null,null,null,null,null);
         if(cursor.moveToFirst()){
             while (!cursor.isAfterLast()){
@@ -126,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 cursor.moveToNext();
             }
         }
-        lvLevel=findViewById(R.id.lvLevel);
         LevelAdapter adapter=new LevelAdapter(MainActivity.this,R.layout.layout_listview_level,arrayList);
         lvLevel.setAdapter(adapter);
         lvLevel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -147,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void tab_topic_setup() {
-        list=new ArrayList<>();
+
         Cursor cursor = database.query("categories",null,null,null,null,null,null);
         if(cursor.moveToFirst()) {
             while (!cursor.isAfterLast()){
@@ -159,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         }
         list.add(new Categories(7,"Câu hỏi điểm liệt",60,1,60));
         //View tabView = findViewById(R.id.tab_topic_main);
-        lvTopic = findViewById(R.id.lv_topic);
+
         CategoriesAdapter adapter=new CategoriesAdapter(MainActivity.this,R.layout.layout_listview_topic,list);
         lvTopic.setAdapter(adapter);
         lvTopic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -180,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void tabmainsetup() {
-        tabmain=findViewById(R.id.tab_main);
+
         tabmain.setup();
 
         TabHost.TabSpec spec_topic,spec_level;
