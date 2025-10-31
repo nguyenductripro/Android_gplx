@@ -91,6 +91,20 @@ public class QuestionActivityBase extends AppCompatActivity {
                 }
             }
         });
+        if(cursor.moveToFirst()){
+            int cnt=1;
+            if(id.equals("topic")&&topicid==7){
+                while(true){
+                    if(cnt==start) break;
+                    cnt++;
+                    cursor.moveToNext();
+                }
+            }
+        }
+        else {
+            Log.d("DEBUG_TAG", "Can't find data");
+            finish();
+        }
 
 
     }

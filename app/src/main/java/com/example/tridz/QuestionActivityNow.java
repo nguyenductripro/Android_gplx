@@ -78,20 +78,8 @@ public class QuestionActivityNow extends QuestionActivityBase {
     @Override
     protected void setting(Cursor cursor,Context context) {
         super.setting(cursor,context);
-        if(cursor.moveToFirst()){
-            int cnt=1;
-            if(id.equals("topic")&&topicid==7){
-                while(true){
-                    if(cnt==start) break;
-                    cnt++;
-                    cursor.moveToNext();
-                }
-            }
-            set_content(cursor,context);
-            answer.put(ques_id,ans);
-
-        }
-        else finish();
+        set_content(cursor,context);
+        answer.put(ques_id,ans);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

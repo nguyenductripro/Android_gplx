@@ -115,7 +115,6 @@ public class QuestionActivityLobby extends AppCompatActivity {
                         return;
                     }
                     if(s.equals("Xem đáp án sau khi hoàn thành bài thi")){
-
                         Intent nextIntent = new Intent(QuestionActivityLobby.this,QuestionActivityLast.class);
                         String name=intent.getStringExtra("name");
                         nextIntent.putExtra("name",name);
@@ -178,9 +177,6 @@ public class QuestionActivityLobby extends AppCompatActivity {
     }
 
     private void setDisplay() {
-
-
-
         name.setText(intent.getStringExtra("name"));
         if(id.equals("topic")){
             num.setText(String.valueOf(intent.getIntExtra("num",1))+" câu");
