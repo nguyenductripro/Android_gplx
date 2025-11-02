@@ -86,7 +86,7 @@ public class QuestionActivityNow extends QuestionActivityBase {
                     return;
                 }
                 if(next.getText().toString().equals("Kiểm tra")){
-                    explain.setText("Giải thích: "+explaination);
+                    explain.setText("Giải thích: "+listQuestion.get(anInt).getExplain());
                     next.setText("Câu tiếp theo");
                     setCheckColor(listQuestion.get(anInt),QuestionActivityNow.this);
                     return;

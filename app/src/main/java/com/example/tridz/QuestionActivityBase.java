@@ -34,16 +34,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class QuestionActivityBase extends AppCompatActivity {
-    protected  TextView topicname;
+    protected  TextView topicname,content;
     protected  ImageButton back;
     protected  Button submit;
     protected SQLiteDatabase database= null;
-    protected  TextView content;
     protected  RadioButton a,b,c,d;
     protected ImageView imgQuestion;
-    protected  String ans="",explaination="",img_url="",id,state="Trượt";
+    protected  String  img_url="",id,state="Trượt";
     protected  RadioGroup radioGroup;
-    protected  ArrayList<Integer> listofquestion=new ArrayList<>();
     protected  int start,end,level,min,time,topicid,count;
     protected  Intent intent;
     protected  HashMap<Integer,Integer>rule;
@@ -123,10 +121,8 @@ public class QuestionActivityBase extends AppCompatActivity {
             d.setVisibility(View.GONE);
         }
         else d.setText(question.getD());
-        explaination=question.getExplain();
         img_url=question.getImg_url();
         imgQuestion.setVisibility(View.VISIBLE);
-        ans=question.getAnswer();
         if(img_url==null){
             imgQuestion.setVisibility(View.GONE);
         }
