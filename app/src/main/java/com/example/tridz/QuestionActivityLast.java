@@ -76,7 +76,6 @@ public class QuestionActivityLast extends QuestionActivityBase {
     protected void setting(Context context) {
         super.setting(context);
         set_content(listQuestion.get(0), context);
-        answer.put(ques_id,ans);
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +86,6 @@ public class QuestionActivityLast extends QuestionActivityBase {
                 }
                 else{
                     set_content(listQuestion.get(anInt),context);
-                    answer.put(ques_id,ans);
                 }
             }
         });
@@ -101,7 +99,6 @@ public class QuestionActivityLast extends QuestionActivityBase {
                 }
                 else{
                     set_content(listQuestion.get(anInt),context);
-                    answer.put(ques_id,ans);
                 }
             }
         });
@@ -111,7 +108,7 @@ public class QuestionActivityLast extends QuestionActivityBase {
     @Override
     protected  void set_content(Question question, Context context){
         super.set_content(question,context);
-        String selected = hashMap.get(ques_id);
+        String selected = question.getUserChoice();
         if (selected != null) {
             if (selected.equals(a.getText().toString())) a.setChecked(true);
             else if (selected.equals(b.getText().toString())) b.setChecked(true);
@@ -120,7 +117,8 @@ public class QuestionActivityLast extends QuestionActivityBase {
         }
         else {
             radioGroup.clearCheck();
-            hashMap.remove(ques_id);
+            question.setUserChoice(null);
+            listQuestion.get(anInt).setUserChoice(null);
         }
     }
 }

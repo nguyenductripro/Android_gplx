@@ -44,10 +44,8 @@ public class QuestionActivityBase extends AppCompatActivity {
     protected  String ans="",explaination="",img_url="",id,state="Trượt";
     protected  RadioGroup radioGroup;
     protected  ArrayList<Integer> listofquestion=new ArrayList<>();
-    protected  HashMap<Integer,String> hashMap,answer;
-    protected  int start,end,level,min,time,total,ques_id,critical=0,topicid,count;
+    protected  int start,end,level,min,time,topicid,count;
     protected  Intent intent;
-
     protected  HashMap<Integer,Integer>rule;
     protected ArrayList<Question> listQuestion;
     protected QuestionDAO questionDAO;
@@ -57,8 +55,6 @@ public class QuestionActivityBase extends AppCompatActivity {
         intent=getIntent();
         database=openOrCreateDatabase("ATGT.db",MODE_PRIVATE,null);
         get_from_intent();
-        hashMap=new HashMap<>();
-        answer=new HashMap<>();
         questionDAO=new QuestionDAO(database);
         get_list_question();
     }
@@ -102,7 +98,7 @@ public class QuestionActivityBase extends AppCompatActivity {
                     RadioButton selected = findViewById(checkedId);
                     if (selected != null) {
                         String chosen = selected.getText().toString();
-                        hashMap.put(ques_id, chosen);
+                        listQuestion.get(anInt).setUserChoice(chosen);
                     }
                 }
             }
@@ -113,7 +109,6 @@ public class QuestionActivityBase extends AppCompatActivity {
         }
     }
     protected void set_content(Question question,Context context) {
-        ques_id=question.getId();
         if(id.equals("topic")) content.setText("Câu "+question.getId()+": "+question.getContent());
         else content.setText("Câu "+String.valueOf(anInt+1)+": "+question.getContent());
         a.setText(question.getA());
@@ -128,7 +123,6 @@ public class QuestionActivityBase extends AppCompatActivity {
             d.setVisibility(View.GONE);
         }
         else d.setText(question.getD());
-        if(question.getIs_critical()==1) critical=ques_id;
         explaination=question.getExplain();
         img_url=question.getImg_url();
         imgQuestion.setVisibility(View.VISIBLE);
@@ -184,12 +178,11 @@ public class QuestionActivityBase extends AppCompatActivity {
         builder1.setTitle("Kết quả");
         String msg="/"+count;
         int truecnt=0;
-        for(Integer q:hashMap.keySet()){
-            if(hashMap.get(q).equals(answer.get(q))) {
+        for(Question question:listQuestion){
+            if(question.getUserChoice()==null) continue;
+            if(question.getAnswer().equals(question.getUserChoice())){
                 truecnt++;
-                if(q==critical){
-                    state="Đỗ";
-                }
+                if(question.getIs_critical()==1) state="Đỗ";
             }
         }
         msg=String.valueOf(truecnt)+msg;
@@ -210,9 +203,7 @@ public class QuestionActivityBase extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent nextIntent=new Intent(context,QuestionActivityReview.class);
-                getfullques();
-                nextIntent.putExtra("choice",hashMap);
-                nextIntent.putExtra("list",listofquestion);
+                nextIntent.putParcelableArrayListExtra("listQuestion",listQuestion);
                 startActivity(nextIntent);
                 finish();
             }
@@ -220,11 +211,7 @@ public class QuestionActivityBase extends AppCompatActivity {
         AlertDialog alertDialog=builder1.create();
         alertDialog.show();
     }
-    protected   void getfullques(){
-        for(Question x:listQuestion){
-            listofquestion.add(x.getId());
-        }
-    }
+
     protected void backSetup(Context context) {
         back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,6 +1,7 @@
 package com.example.tridz.adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -84,7 +85,6 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         }
         else img.setVisibility(View.GONE);
         String ans=question.getAnswer();
-
         if(ans.equals(question.getA())){
             a.setBackground(context.getDrawable(R.drawable.bg_true));
         }
@@ -97,20 +97,29 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         if(ans.equals(question.getD())){
             d.setBackground(context.getDrawable(R.drawable.bg_true));
         }
-        if(!ans.equals(question.getUserChoice())){
-            if(question.getUserChoice().equals(question.getA())){
-                a.setBackground(context.getDrawable(R.drawable.bg_false));
-            }
-            else if(question.getUserChoice().equals(question.getB())){
-                b.setBackground(context.getDrawable(R.drawable.bg_false));
-            }
-            if(question.getUserChoice().equals(question.getC())){
-                c.setBackground(context.getDrawable(R.drawable.bg_false));
-            }
-            if(question.getUserChoice().equals(question.getD())){
-                d.setBackground(context.getDrawable(R.drawable.bg_false));
+        content.setBackgroundColor(Color.parseColor("#B5F09D"));
+        if(question.getUserChoice()!=null){
+            if(!ans.equals(question.getUserChoice())){
+                content.setBackgroundColor(Color.parseColor("#E9B6B6"));
+                if(question.getUserChoice().equals(question.getA())){
+                    a.setBackground(context.getDrawable(R.drawable.bg_false));
+                }
+                else if(question.getUserChoice().equals(question.getB())){
+                    b.setBackground(context.getDrawable(R.drawable.bg_false));
+                }
+                if(question.getC()!=null&&question.getUserChoice().equals(question.getC())){
+                    c.setBackground(context.getDrawable(R.drawable.bg_false));
+                }
+                if(question.getD()!=null&&question.getUserChoice().equals(question.getD())){
+                    d.setBackground(context.getDrawable(R.drawable.bg_false));
+                }
             }
         }
+        else{
+            content.setText("Câu "+question.getId()+"(Chưa chọn đáp án): "+question.getContent());
+            content.setBackgroundColor(Color.parseColor("#FFF8B2"));
+        }
+
         return convertView;
     }
 }

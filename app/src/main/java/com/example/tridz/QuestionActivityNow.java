@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,7 +35,7 @@ import java.util.HashMap;
 
 public class QuestionActivityNow extends QuestionActivityBase {
     private Button next;
-    private TextView explain,showans;
+    private TextView explain;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +70,6 @@ public class QuestionActivityNow extends QuestionActivityBase {
         radioGroup=findViewById(R.id.radioBtnQAN);
         imgQuestion=findViewById(R.id.imgQAN);
         explain=findViewById(R.id.txtQANexplain);
-        showans=findViewById(R.id.txtQANans);
         submit=findViewById(R.id.btnQAN_submit);
         back=findViewById(R.id.btnBackQAN);
     }
@@ -77,7 +77,6 @@ public class QuestionActivityNow extends QuestionActivityBase {
     protected void setting(Context context) {
         super.setting(context);
         set_content(listQuestion.get(0), context);
-        answer.put(ques_id,ans);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,9 +86,9 @@ public class QuestionActivityNow extends QuestionActivityBase {
                     return;
                 }
                 if(next.getText().toString().equals("Kiểm tra")){
-                    showans.setText("Đáp án đúng là: "+ans);
                     explain.setText("Giải thích: "+explaination);
                     next.setText("Câu tiếp theo");
+                    setCheckColor(listQuestion.get(anInt),QuestionActivityNow.this);
                     return;
                 }
                 anInt++;
@@ -97,11 +96,10 @@ public class QuestionActivityNow extends QuestionActivityBase {
                     return;
                 }
                 else{
-                    showans.setText("");
                     explain.setText("");
                     next.setText("Kiểm tra");
+                    resetCheckColor();
                     set_content(listQuestion.get(anInt),context);
-                    answer.put(ques_id,ans);
 
                 }
             }
@@ -112,6 +110,44 @@ public class QuestionActivityNow extends QuestionActivityBase {
     protected void set_content(Question question, Context context) {
         super.set_content(question,context);
         radioGroup.clearCheck();
-        hashMap.remove(ques_id);
+        question.setUserChoice(null);
+        listQuestion.get(anInt).setUserChoice(null);
+    }
+    private void setCheckColor(Question question,Context context){
+        String ans=question.getAnswer();
+        if(ans.equals(question.getA())){
+            a.setBackground(context.getDrawable(R.drawable.bg_true));
+        }
+        else if(ans.equals(question.getB())){
+            b.setBackground(context.getDrawable(R.drawable.bg_true));
+        }
+        if(ans.equals(question.getC())){
+            c.setBackground(context.getDrawable(R.drawable.bg_true));
+        }
+        if(ans.equals(question.getD())){
+            d.setBackground(context.getDrawable(R.drawable.bg_true));
+        }
+        if(question.getUserChoice()!=null){
+            if(!ans.equals(question.getUserChoice())){
+                if(question.getUserChoice().equals(question.getA())){
+                    a.setBackground(context.getDrawable(R.drawable.bg_false));
+                }
+                else if(question.getUserChoice().equals(question.getB())){
+                    b.setBackground(context.getDrawable(R.drawable.bg_false));
+                }
+                if(question.getC()!=null&&question.getUserChoice().equals(question.getC())){
+                    c.setBackground(context.getDrawable(R.drawable.bg_false));
+                }
+                if(question.getD()!=null&&question.getUserChoice().equals(question.getD())){
+                    d.setBackground(context.getDrawable(R.drawable.bg_false));
+                }
+            }
+        }
+    }
+    private  void resetCheckColor(){
+        a.setBackgroundColor(Color.WHITE);
+        b.setBackgroundColor(Color.WHITE);
+        c.setBackgroundColor(Color.WHITE);
+        d.setBackgroundColor(Color.WHITE);
     }
 }
