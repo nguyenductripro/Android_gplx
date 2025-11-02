@@ -25,15 +25,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.tridz.dbclass.Question;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class QuestionActivityNow extends QuestionActivityBase {
-
     private Button next;
-
     private TextView explain,showans;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +47,11 @@ public class QuestionActivityNow extends QuestionActivityBase {
         });
         init();
         String topic=intent.getStringExtra("name");
-        topicname.setText(topic);
+        if(id.equals("topic")) topicname.setText(topic);
+        else topicname.setText("Hạng "+topic);
         backSetup(QuestionActivityNow.this);
-        setCursor();
-        setting(cursor,QuestionActivityNow.this);
+        setting(QuestionActivityNow.this);
         submitSetup(QuestionActivityNow.this);
-
     }
     @Override
     protected void init(){
@@ -74,11 +73,10 @@ public class QuestionActivityNow extends QuestionActivityBase {
         submit=findViewById(R.id.btnQAN_submit);
         back=findViewById(R.id.btnBackQAN);
     }
-
     @Override
-    protected void setting(Cursor cursor,Context context) {
-        super.setting(cursor,context);
-        set_content(cursor,context);
+    protected void setting(Context context) {
+        super.setting(context);
+        set_content(listQuestion.get(0), context);
         answer.put(ques_id,ans);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,13 +92,15 @@ public class QuestionActivityNow extends QuestionActivityBase {
                     next.setText("Câu tiếp theo");
                     return;
                 }
-                if(cursor.isLast()) return;
+                anInt++;
+                if(anInt>=listQuestion.size()) {
+                    return;
+                }
                 else{
                     showans.setText("");
                     explain.setText("");
                     next.setText("Kiểm tra");
-                    cursor.moveToNext();
-                    set_content(cursor,context);
+                    set_content(listQuestion.get(anInt),context);
                     answer.put(ques_id,ans);
 
                 }
@@ -108,12 +108,10 @@ public class QuestionActivityNow extends QuestionActivityBase {
         });
 
     }
-
     @Override
-    protected void set_content(Cursor cursor, Context context) {
-        super.set_content(cursor,context);
+    protected void set_content(Question question, Context context) {
+        super.set_content(question,context);
         radioGroup.clearCheck();
         hashMap.remove(ques_id);
     }
-
 }

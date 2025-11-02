@@ -25,6 +25,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.tridz.dbclass.Question;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -45,10 +47,10 @@ public class QuestionActivityLast extends QuestionActivityBase {
         });
         init();
         String topic=intent.getStringExtra("name");
-        topicname.setText(topic);
+        if(id.equals("topic")) topicname.setText(topic);
+        else topicname.setText("Hạng "+topic);
         backSetup(QuestionActivityLast.this);
-        setCursor();
-        setting(cursor,QuestionActivityLast.this);
+        setting(QuestionActivityLast.this);
         submitSetup(QuestionActivityLast.this);
     }
     @Override
@@ -71,17 +73,20 @@ public class QuestionActivityLast extends QuestionActivityBase {
         imgQuestion=findViewById(R.id.imgQAL);
     }
     @Override
-    protected void setting(Cursor cursor, Context context) {
-        super.setting(cursor,context);
-        set_content(cursor,context);
+    protected void setting(Context context) {
+        super.setting(context);
+        set_content(listQuestion.get(0), context);
         answer.put(ques_id,ans);
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(cursor.isFirst()) return;
+                anInt--;
+                if(anInt<0) {
+                    anInt++;
+                    return;
+                }
                 else{
-                    cursor.moveToPrevious();
-                    set_content(cursor,context);
+                    set_content(listQuestion.get(anInt),context);
                     answer.put(ques_id,ans);
                 }
             }
@@ -89,10 +94,13 @@ public class QuestionActivityLast extends QuestionActivityBase {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(cursor.isLast()) return;
+                anInt++;
+                if(anInt>=listQuestion.size()) {
+                    anInt--;
+                    return;
+                }
                 else{
-                    cursor.moveToNext();
-                    set_content(cursor,context);
+                    set_content(listQuestion.get(anInt),context);
                     answer.put(ques_id,ans);
                 }
             }
@@ -101,8 +109,8 @@ public class QuestionActivityLast extends QuestionActivityBase {
     }
 
     @Override
-    protected  void set_content(Cursor cursor, Context context){
-        super.set_content(cursor,context);
+    protected  void set_content(Question question, Context context){
+        super.set_content(question,context);
         String selected = hashMap.get(ques_id);
         if (selected != null) {
             if (selected.equals(a.getText().toString())) a.setChecked(true);

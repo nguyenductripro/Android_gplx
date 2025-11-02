@@ -23,6 +23,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.tridz.DAO.CategoriesDAO;
 import com.example.tridz.adapter.LevelAdapter;
 import com.example.tridz.dbclass.Categories;
 import com.example.tridz.adapter.CategoriesAdapter;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Level> arrayList;
     private SQLiteDatabase database=null;
     private ImageButton btnMenu;
+    private CategoriesDAO categoriesDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,8 +75,9 @@ public class MainActivity extends AppCompatActivity {
         processCopy();
         database = openOrCreateDatabase("ATGT.db",MODE_PRIVATE,null);
         find_view();
-        list=new ArrayList<>();
-        arrayList=new ArrayList<>();
+        categoriesDAO=new CategoriesDAO(database);
+        list=categoriesDAO.getAllCategories();
+        arrayList=categoriesDAO.getAllLevel();
     }
 
     private void find_view() {
@@ -98,15 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void tab_level_setup() {
-
-        Cursor cursor = database.query("level",null,null,null,null,null,null);
-        if(cursor.moveToFirst()){
-            while (!cursor.isAfterLast()){
-                arrayList.add(new Level(cursor.getInt(0),cursor.getString(1),
-                        cursor.getInt(2),cursor.getInt(3),cursor.getInt(4)));
-                cursor.moveToNext();
-            }
-        }
         LevelAdapter adapter=new LevelAdapter(MainActivity.this,R.layout.layout_listview_level,arrayList);
         lvLevel.setAdapter(adapter);
         lvLevel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -127,19 +121,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void tab_topic_setup() {
-
-        Cursor cursor = database.query("categories",null,null,null,null,null,null);
-        if(cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()){
-                list.add(new Categories(cursor.getInt(0),
-                        cursor.getString(1),cursor.getInt(2),cursor.getInt(3),cursor.getInt(4)));
-                cursor.moveToNext();
-            }
-
-        }
         list.add(new Categories(7,"Câu hỏi điểm liệt",60,1,60));
-        //View tabView = findViewById(R.id.tab_topic_main);
-
         CategoriesAdapter adapter=new CategoriesAdapter(MainActivity.this,R.layout.layout_listview_topic,list);
         lvTopic.setAdapter(adapter);
         lvTopic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -160,9 +142,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void tabmainsetup() {
-
         tabmain.setup();
-
         TabHost.TabSpec spec_topic,spec_level;
         spec_topic=tabmain.newTabSpec("topic");
         spec_level=tabmain.newTabSpec("level");
