@@ -107,7 +107,7 @@ public class QuestionActivityBase extends AppCompatActivity {
         }
     }
     protected void set_content(Question question,Context context) {
-        if(id.equals("topic")) content.setText("Câu "+question.getId()+": "+question.getContent());
+        if(id.equals("topic")&&topicid<7) content.setText("Câu "+question.getId()+": "+question.getContent());
         else content.setText("Câu "+String.valueOf(anInt+1)+": "+question.getContent());
         a.setText(question.getA());
         b.setText(question.getB());
