@@ -53,6 +53,7 @@ public class QuestionActivityNow extends QuestionActivityBase {
         backSetup(QuestionActivityNow.this);
         setting(QuestionActivityNow.this);
         submitSetup(QuestionActivityNow.this);
+        settingtimer(QuestionActivityNow.this);
     }
     @Override
     protected void init(){
@@ -72,6 +73,7 @@ public class QuestionActivityNow extends QuestionActivityBase {
         explain=findViewById(R.id.txtQANexplain);
         submit=findViewById(R.id.btnQAN_submit);
         back=findViewById(R.id.btnBackQAN);
+        timer=findViewById(R.id.txtQANtimer);
     }
     @Override
     protected void setting(Context context) {
